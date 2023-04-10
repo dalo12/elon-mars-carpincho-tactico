@@ -32,36 +32,38 @@ import java.lang.Math;
  */
 
 public class Main{
-    public static void main(String[] args){
+    public static void main(String[] args) {
         List<Integer> resultado;
-        List<Integer> entrada = new ArrayList<Integer>();
+        List<List<Integer>> entrada = new ArrayList<List<Integer>>();
         Scanner s = new Scanner(System.in);
         int casos_t = 0;
         int cant_n = 0;
-        int peso_w = 0;
+        List<Integer> peso_w = new ArrayList<Integer>();
 
         casos_t = s.nextInt();
 
-        for(int i = 0; i<casos_t; i++){
+        for (int i = 0; i < casos_t; i++) {
             cant_n = s.nextInt();
-            peso_w = s.nextInt();
+            peso_w.add(s.nextInt());
+            entrada.add(new ArrayList<Integer>());
 
-            for(int j = 0; j<cant_n; j++){
-                entrada.add(s.nextInt());
+            for (int j = 0; j < cant_n; j++) {
+                entrada.get(i).add(s.nextInt());
             }
-
-        resultado = resolver(entrada, peso_w);
-
-        if(resultado.isEmpty()){
-            System.out.println(-1);
-        }else{
-            System.out.println(resultado.size());
-            for(Integer p : resultado){
-                System.out.print(p + " ");
-            }
-            System.out.println();
         }
-        entrada = new ArrayList<Integer>();
+
+        for (int i = 0; i < casos_t; i++) {
+            resultado = resolver(entrada.get(i), peso_w.get(i));
+
+            if (resultado.isEmpty()) {
+                System.out.println(-1);
+            } else {
+                System.out.println(resultado.size());
+                for (Integer p : resultado) {
+                    System.out.print(p + " ");
+                }
+                System.out.println();
+            }
         }
     }
 
