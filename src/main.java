@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.lang.Math.ceil;
 /*
  * Elon quiere viajar a Marte, pero necesita tu ayuda.
  * Elon tiene un cohete con una capacidad de W
@@ -26,9 +28,50 @@
         imprimir(-1)
     }
  */
-public static void main(String[] args){
-    int[] entrada;
-    int[] resultado;
-    int casos = 0;
 
+public class Resolucion{
+    public static void main(String[] args){
+        List<Integer> resultado;
+        List<Integer> entrada = new ArrayList<Integer>();
+        Scanner s = new Scanner(System.in);
+        int casos_t = 0;
+        int cant_n = 0;
+        int peso_w = 0;
+
+        for(int i = 0; i<casos_t; i++){
+            cant_n = s.nextInt();
+            peso_w = s.nextInt();
+
+            for(int j = 0; j<cant_n; j++){
+                entrada.add(s.nextInt());
+            }
+        }
+
+        resultado = resolver(entrada, peso_w);
+
+        System.out.println();
+        for(Integer p : resultado){
+            System.out.print(p + " ");
+        }
+        System.out.println();
+    }
+
+    protected List<Integer> resolver(List<Integer> entrada, int peso_w){
+        List<Integer> resultado = new ArrayList<Integer>();
+        int peso_c = 0;
+
+        for(Integer p : entrada){
+            if(p <= peso_w - peso_c){
+                resultado.add(entrada.indexOf(p));
+                peso_c += p;
+            }
+        }
+
+        if(peso_c >= Math.ceil(peso_w / 2)){
+            resultado.clear();
+            resultado.add(-1);
+        }
+
+        return resultado;   
+    }
 }
