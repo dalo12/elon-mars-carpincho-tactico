@@ -5,61 +5,62 @@ import java.lang.Math;
 
 public class Main{
     public static void main(String[] args) {
-        List<Integer> resultado;
-        List<List<Integer>> entrada = new ArrayList<List<Integer>>();
+        List<List<Integer>> resultado = new ArrayList<List<Integer>>();
+        int[] entrada;
         Scanner s = new Scanner(System.in);
         int casos_t = 0;
         int cant_n = 0;
-        List<Integer> peso_w = new ArrayList<Integer>();
+        int peso_w = 0;
 
         casos_t = s.nextInt();
 
         for (int i = 0; i < casos_t; i++) {
             cant_n = s.nextInt();
-            peso_w.add(s.nextInt());
-            entrada.add(new ArrayList<Integer>());
+            peso_w = s.nextInt();
+            entrada = new int[cant_n];
 
             for (int j = 0; j < cant_n; j++) {
-                entrada.get(i).add(s.nextInt());
+                entrada[j] = s.nextInt();
             }
+
+            resultado.add(resolver(entrada, peso_w));
         }
 
-        for (int i = 0; i < casos_t; i++) {
-            resultado = resolver(entrada.get(i), peso_w.get(i));
-
-            if (resultado.isEmpty()) {
-                System.out.println(-1);
-            } else {
-                System.out.println(resultado.size());
-                for (Integer p : resultado) {
-                    System.out.print(p + " ");
-                }
-                System.out.println();
-            }
+        for (List<Integer> l : resultado) {
+            imprimirResultado(l);
         }
     }
 
-    protected static List<Integer> resolver(List<Integer> entrada, int peso_w){
+    protected static List<Integer> resolver(int[] entrada, int peso_w){
         List<Integer> resultado = new ArrayList<Integer>();
         int peso_c = 0;
-        int indice = 1;
-        for(Integer p : entrada){
-            if(p <= peso_w - peso_c){
-                resultado.add(indice);
-                peso_c += p;
-            }
-            if(peso_w == peso_c){
-                break;
-            }
+        int i = 0;
 
-            indice++;
+        while(peso_w != peso_c && i < entrada.length){
+            if(entrada[i] <= peso_w - peso_c){
+                resultado.add(i + 1);
+                peso_c += entrada[i];
+            }
+            i++;
         }
-
+        
         if(peso_c < Math.ceil(peso_w / 2)){
-            resultado.clear();
+            resultado = new ArrayList<Integer>();
         }
 
         return resultado;
+    }
+
+    protected static void imprimirResultado(List<Integer> resultado){
+        if(resultado.size() == 0){
+            System.out.println(-1);
+        }else{
+            System.out.println(resultado.size());
+            for(Integer e : resultado){
+                System.out.print(e + " ");
+            }
+            System.out.println();
+        }
     }
 }
 
