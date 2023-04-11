@@ -2,15 +2,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.lang.Math;
-import java.lang.Comparable;
+import java.util.Map.Entry;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Main{
     public static void main(String[] args) {
         List<List<Integer>> resultado = new ArrayList<List<Integer>>();
-        Paquete<Integer,Integer>[] entrada;
+        Entry<Integer,Integer>[] entrada;
+        Entry<Integer, Integer> paquete;
         Scanner s = new Scanner(System.in);
-        Paquete<Integer, Integer> paquete;
         int casos_t = 0;
         int cant_n = 0;
         int peso_w = 0;
@@ -21,11 +23,11 @@ public class Main{
         for (int i = 0; i < casos_t; i++) {
             cant_n = s.nextInt();
             peso_w = s.nextInt();
-            entrada = (Paquete<Integer,Integer>[]) new Paquete[cant_n];
+            entrada = new Entry[cant_n];
             
             for (int j = 0; j < cant_n; j++) {
                 peso_paquete = s.nextInt();
-                paquete = new Paquete<Integer,Integer>(j + 1, peso_paquete);
+                paquete = new SimpleEntry<Integer,Integer>(j + 1, peso_paquete);
                 entrada[j] = paquete;
             }
 
@@ -37,12 +39,19 @@ public class Main{
         }
     }
 
-    protected static List<Integer> resolver(Paquete<Integer,Integer>[] entrada, int peso_w){
+    protected static List<Integer> resolver(Entry<Integer,Integer>[] entrada, int peso_w){
         List<Integer> resultado = new ArrayList<Integer>();
         int peso_c = 0;
         int i = entrada.length - 1;
 
-        Arrays.sort(entrada);
+        Arrays.sort(entrada, new Comparator<Entry<Integer,Integer>>(){
+
+            @Override
+            public int compare(Entry<Integer, Integer> arg0, Entry<Integer, Integer> arg1) {
+                return arg0.getValue() - arg1.getValue();
+            }
+            
+        });
 
         while(peso_w != peso_c && i >= 0){
             if(entrada[i].getValue() <= peso_w - peso_c){
@@ -73,29 +82,6 @@ public class Main{
 
 }
 
-class Paquete<K,V> implements Comparable<Paquete>{
-    protected K key;
-    protected V value;
-
-    public Paquete(K key, V value){
-        this.key = key;
-        this.value = value;
-    }
-
-    public K getKey() {
-        return key;
-    }
-
-    public V getValue() {
-        return value;
-    }
-
-    @Override
-    public int compareTo(Paquete o) {
-        return (int) value - (int) o.getValue();
-    }
-
-}
 /*
  * Elon quiere viajar a Marte, pero necesita tu ayuda.
  * Elon tiene un cohete con una capacidad de W
