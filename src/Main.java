@@ -2,25 +2,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.lang.Math;
+import java.util.PriorityQueue;
+import java.util.Map.Entry;
+import java.lang.Comparable;
+import java.util.Arrays;
 
 public class Main{
     public static void main(String[] args) {
         List<List<Integer>> resultado = new ArrayList<List<Integer>>();
-        int[] entrada;
+        Paquete<Integer,Integer>[] entrada;
         Scanner s = new Scanner(System.in);
+        Paquete<Integer, Integer> paquete;
         int casos_t = 0;
         int cant_n = 0;
         int peso_w = 0;
+        int peso_paquete = 0;
 
         casos_t = s.nextInt();
 
         for (int i = 0; i < casos_t; i++) {
             cant_n = s.nextInt();
             peso_w = s.nextInt();
-            entrada = new int[cant_n];
-
+            entrada = (Paquete<Integer,Integer>[]) new Paquete[cant_n];
+            
             for (int j = 0; j < cant_n; j++) {
-                entrada[j] = s.nextInt();
+                peso_paquete = s.nextInt();
+                paquete = new Paquete<Integer,Integer>(j + 1, peso_paquete);
+                entrada[j] = paquete;
             }
 
             resultado.add(resolver(entrada, peso_w));
@@ -31,17 +39,19 @@ public class Main{
         }
     }
 
-    protected static List<Integer> resolver(int[] entrada, int peso_w){
+    protected static List<Integer> resolver(Paquete<Integer,Integer>[] entrada, int peso_w){
         List<Integer> resultado = new ArrayList<Integer>();
         int peso_c = 0;
-        int i = 0;
+        int i = entrada.length - 1;
 
-        while(peso_w != peso_c && i < entrada.length){
-            if(entrada[i] <= peso_w - peso_c){
-                resultado.add(i + 1);
-                peso_c += entrada[i];
+        Arrays.sort(entrada);
+
+        while(peso_w != peso_c && i >= 0){
+            if(entrada[i].getValue() <= peso_w - peso_c){
+                resultado.add(entrada[i].getKey());
+                peso_c += entrada[i].getValue();
             }
-            i++;
+            i--;
         }
         
         if(peso_c < Math.ceil(peso_w / 2)){
@@ -62,8 +72,40 @@ public class Main{
             System.out.println();
         }
     }
+
 }
 
+class Paquete<K,V> implements Comparable<Paquete>, Entry{
+    protected K key;
+    protected V value;
+
+    public Paquete(K key, V value){
+        this.key = key;
+        this.value = value;
+    }
+
+    @Override
+    public K getKey() {
+        return key;
+    }
+
+    @Override
+    public V getValue() {
+        return value;
+    }
+
+    @Override
+    public int compareTo(Paquete o) {
+        return (int) value - (int) o.getValue();
+    }
+
+    @Override
+    public Object setValue(Object value) {
+        Object valor_viejo = value;
+        this.value = (V) value;
+        return valor_viejo;
+    }
+}
 /*
  * Elon quiere viajar a Marte, pero necesita tu ayuda.
  * Elon tiene un cohete con una capacidad de W
