@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.lang.Math;
-import java.util.PriorityQueue;
-import java.util.Map.Entry;
 import java.lang.Comparable;
 import java.util.Arrays;
 
@@ -75,7 +73,7 @@ public class Main{
 
 }
 
-class Paquete<K,V> implements Comparable<Paquete>, Entry{
+class Paquete<K,V> implements Comparable<Paquete>{
     protected K key;
     protected V value;
 
@@ -84,12 +82,10 @@ class Paquete<K,V> implements Comparable<Paquete>, Entry{
         this.value = value;
     }
 
-    @Override
     public K getKey() {
         return key;
     }
 
-    @Override
     public V getValue() {
         return value;
     }
@@ -99,12 +95,6 @@ class Paquete<K,V> implements Comparable<Paquete>, Entry{
         return (int) value - (int) o.getValue();
     }
 
-    @Override
-    public Object setValue(Object value) {
-        Object valor_viejo = value;
-        this.value = (V) value;
-        return valor_viejo;
-    }
 }
 /*
  * Elon quiere viajar a Marte, pero necesita tu ayuda.
@@ -115,22 +105,4 @@ class Paquete<K,V> implements Comparable<Paquete>, Entry{
  * Para ayudar a Elon, te pidió que imprimas una lista de paquetes que cumpla estas condiciones, o le avises que es imposible.
  *
  * Made by David Latouquette & David López
- */
-
-
-/*
-    Pseudocódigo:
-
-    para i = 0 hasta n{
-        si w[i] <= W - C{
-            solucion.add(i)
-            C = C + w[i]
-        }
-    }
-
-    si C >= W / 2 {
-        imprimir(solución)
-    }sino{
-        imprimir(-1)
-    }
  */
