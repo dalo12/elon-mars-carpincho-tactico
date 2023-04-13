@@ -61,7 +61,7 @@ public class Main{
             i--;
         }
         
-        if(peso_c < Math.ceil(peso_w / 2.0f)){
+        if(peso_c < Math.ceil(peso_w / 2.)){
             resultado = new ArrayList<Integer>();
         }
 
