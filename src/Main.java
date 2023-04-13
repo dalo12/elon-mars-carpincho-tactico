@@ -2,33 +2,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.lang.Math;
-import java.util.Map.Entry;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.Arrays;
-import java.util.Comparator;
 
 public class Main{
     public static void main(String[] args) {
         List<List<Integer>> resultado = new ArrayList<List<Integer>>();
-        Entry<Integer,Integer>[] entrada;
-        Entry<Integer, Integer> paquete;
+        int[] entrada;
         Scanner s = new Scanner(System.in);
         int casos_t = 0;
         int cant_n = 0;
         long peso_w = 0;
-        int peso_paquete = 0;
 
         casos_t = s.nextInt();
 
         for (int i = 0; i < casos_t; i++) {
             cant_n = s.nextInt();
             peso_w = s.nextLong();
-            entrada = new Entry[cant_n];
+            entrada = new int[cant_n];
             
             for (int j = 0; j < cant_n; j++) {
-                peso_paquete = s.nextInt();
-                paquete = new SimpleEntry<Integer,Integer>(j + 1, peso_paquete);
-                entrada[j] = paquete;
+                entrada[j] = s.nextInt();
             }
 
             resultado.add(resolver(entrada, peso_w));
@@ -39,29 +31,29 @@ public class Main{
         }
     }
 
-    protected static List<Integer> resolver(Entry<Integer,Integer>[] entrada, long peso_w){
+    protected static List<Integer> resolver(int[] entrada, long peso_w){
         List<Integer> resultado = new ArrayList<Integer>();
         long peso_c = 0;
-        int i = entrada.length - 1;
+        int i = 0;
+        double mitad = Math.ceil(peso_w / 2.);
+        boolean ideal = false;
 
-        Arrays.sort(entrada, new Comparator<Entry<Integer,Integer>>(){
-
-            @Override
-            public int compare(Entry<Integer, Integer> arg0, Entry<Integer, Integer> arg1) {
-                return arg0.getValue() - arg1.getValue();
+        while(peso_w != peso_c && i < entrada.length && !ideal){
+            if(entrada[i] <= peso_w - peso_c){
+                resultado.add(i+1);
+                peso_c += entrada[i];
             }
-            
-        });
-
-        while(peso_w != peso_c && i >= 0){
-            if(entrada[i].getValue() <= peso_w - peso_c){
-                resultado.add(entrada[i].getKey());
-                peso_c += entrada[i].getValue();
+            if(mitad <= entrada[i] && entrada[i] <= peso_w){
+                resultado = new ArrayList<Integer>();
+                resultado.add(i+1);
+                peso_c = entrada[i];
+                ideal = true;
             }
-            i--;
+
+            i++;
         }
         
-        if(peso_c < Math.ceil(peso_w / 2.)){
+        if(peso_c < mitad){
             resultado = new ArrayList<Integer>();
         }
 
