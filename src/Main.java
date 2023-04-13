@@ -15,14 +15,14 @@ public class Main{
         Scanner s = new Scanner(System.in);
         int casos_t = 0;
         int cant_n = 0;
-        int peso_w = 0;
+        long peso_w = 0;
         int peso_paquete = 0;
 
         casos_t = s.nextInt();
 
         for (int i = 0; i < casos_t; i++) {
             cant_n = s.nextInt();
-            peso_w = s.nextInt();
+            peso_w = s.nextLong();
             entrada = new Entry[cant_n];
             
             for (int j = 0; j < cant_n; j++) {
@@ -39,9 +39,9 @@ public class Main{
         }
     }
 
-    protected static List<Integer> resolver(Entry<Integer,Integer>[] entrada, int peso_w){
+    protected static List<Integer> resolver(Entry<Integer,Integer>[] entrada, long peso_w){
         List<Integer> resultado = new ArrayList<Integer>();
-        int peso_c = 0;
+        long peso_c = 0;
         int i = entrada.length - 1;
 
         Arrays.sort(entrada, new Comparator<Entry<Integer,Integer>>(){
