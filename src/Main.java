@@ -11,7 +11,7 @@ public class Main{
         int casos_t = 0;
         int cant_n = 0;
         long peso_w = 0;
-
+ 
         casos_t = s.nextInt();
 
         for (int i = 0; i < casos_t; i++) {
@@ -39,16 +39,19 @@ public class Main{
         boolean ideal = false;
 
         while(peso_w != peso_c && i < entrada.length && !ideal){
-            if(entrada[i] <= peso_w - peso_c){
-                resultado.add(i+1);
-                peso_c += entrada[i];
-            }
             if(mitad <= entrada[i] && entrada[i] <= peso_w){
                 resultado = new ArrayList<Integer>();
                 resultado.add(i+1);
                 peso_c = entrada[i];
                 ideal = true;
             }
+            else {
+            	if(entrada[i] <= peso_w - peso_c){
+                    resultado.add(i+1);
+                    peso_c += entrada[i];
+                }
+            }
+            
 
             i++;
         }
