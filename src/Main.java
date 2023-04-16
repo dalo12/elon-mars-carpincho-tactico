@@ -11,7 +11,7 @@ public class Main{
         int casos_t = 0;
         int cant_n = 0;
         long peso_w = 0;
- 
+
         casos_t = s.nextInt();
 
         for (int i = 0; i < casos_t; i++) {
