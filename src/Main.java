@@ -38,7 +38,7 @@ public class Main{
         double mitad = Math.ceil(peso_w / 2.);
         boolean ideal = false;
 
-        while(peso_w != peso_c && i < entrada.length && !ideal){
+        while(peso_c < mitad  && i < entrada.length && !ideal){
             if(mitad <= entrada[i] && entrada[i] <= peso_w){
                 resultado = new ArrayList<Integer>();
                 resultado.add(i+1);
@@ -46,7 +46,7 @@ public class Main{
                 ideal = true;
             }
             else {
-            	if(entrada[i] <= peso_w - peso_c){
+            	if(peso_c + entrada[i] <= peso_w){
                     resultado.add(i+1);
                     peso_c += entrada[i];
                 }
